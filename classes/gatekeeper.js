@@ -23,8 +23,8 @@ class UDPServerManager {
         const text = msg.toString().trim();
 
         //per connection
-        if (!this.activeClients.has(clientId)) {
-            if (this.activeClients.size >= config.maxClients) {
+        if (!this.activeClients.has(clientId)){
+            if (this.activeClients.size >= config.maxClients){
                 return this.send('SERVER: Nuk ka vend, provo me vone.', rinfo.port, rinfo.address);
             }
             
@@ -34,6 +34,21 @@ class UDPServerManager {
 
             return this.send(`SERVER: Mire se erdhe! Roli yt: ${role}`, rinfo.port, rinfo.address);
         }
+
+        //kontollon aktivitetin e klientit (heartbeat)
+        const clientData = this.activeClients.get(clientId);
+        clientData.lastSeen = Date.now();
+        if(text === 'ping') return; //ignore heartbeat pings
+        this.monitor.log(`Mesazh nga ${clientId} (${clientData.role}): ${text}`);
+        
+        //per ekzekutim te komandave
+        const execute = () => this.fileManager.processCommand(text, clientData.role, this, rinfo);
+        if(clientData.role === 'admin'){
+            execute(); //admin - menjehere
+        }else{
+            setTimeout(execute, 500); //client - me delay 0.5s
+        }
+
     }
 
 }
