@@ -51,4 +51,18 @@ class UDPServerManager {
 
     }
 
+    //kontrollon cdo 5s dhe heq klientat joaktiv
+    startHeartbeatMonitor(){
+        setInterval(() => {
+            const now = Date.now();
+            for(const [clientId, data] of this.activeClients.entries()){
+                if(now - data.lastSeen>config.timeout){
+                    this.monitor.log(`Timeout: ${clientId} u shkëput.`);
+                    this.send('SERVER: U shkepute per joaktivitet.', data.port, data.ip);
+                    this.activeClients.delete(clientId);
+                }
+            }
+        }, 5000);
+    }
+
 }
