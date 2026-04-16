@@ -11,6 +11,10 @@ class UDPServerManager {
     }
 
     start() {
+        this.server.on('message', (msg, rinfo)=>this.handleMessage(msg, rinfo));
+        this.server.on('listening', ()=> console.log(`[UDP] Duke degjuar ne portin ${config.port}`));
+        this.server.bind(config.port);
+        this.startHeartbeatMonitor();
     }
 
     //dergon mesazhin te klienti
@@ -66,3 +70,5 @@ class UDPServerManager {
     }
 
 }
+
+module.exports = UDPServerManager;
