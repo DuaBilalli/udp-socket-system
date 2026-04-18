@@ -2,15 +2,16 @@ const dgram = require('dgram');
 const readline = require('readline');
 const config = require('../config/config');
 
-const dgram = require('dgram');
-const readline = require('readline');
-const config = require('../config/config');
-
 class UDPClient {
   constructor(role = 'user') {
     this.client = dgram.createSocket('udp4');
     this.role = role;
     this.prefix = role === 'admin' ? 'ADMIN' : 'USER';
+
+    this.allowedCommands = {
+      user: ['/read'],
+      admin: ['/list', '/read', '/upload', '/download', '/delete', '/search', '/info']
+    };
 
     this.rl = readline.createInterface({
       input: process.stdin,
@@ -32,7 +33,15 @@ class UDPClient {
 
     this.rl.on('line', (line) => {
       const input = line.trim();
-      if (input) this.send(input);
+      const command = input.split(' ')[0];
+
+      if (!this.allowedCommands[this.role].includes(command)) {
+        console.log('⛔ Nuk ke leje për këtë komandë');
+        this.rl.prompt();
+        return;
+      }
+
+      this.send(input);
       this.rl.prompt();
     });
   }
