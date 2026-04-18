@@ -2,6 +2,10 @@ const dgram = require('dgram');
 const readline = require('readline');
 const config = require('../config/config');
 
+const dgram = require('dgram');
+const readline = require('readline');
+const config = require('../config/config');
+
 class UDPClient {
   constructor(role = 'user') {
     this.client = dgram.createSocket('udp4');
@@ -16,7 +20,14 @@ class UDPClient {
   }
 
   start() {
+    this.client.on('message', (msg) => {
+      console.log('\nServer:', msg.toString());
+      this.rl.prompt();
+    });
+
     console.log(`U lidh me serverin ${config.host}:${config.port}`);
+    this.send(`${this.prefix}: duke u lidhur`);
+
     this.rl.prompt();
 
     this.rl.on('line', (line) => {
