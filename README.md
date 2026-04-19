@@ -82,4 +82,41 @@ node client-admin.js
 
 # Authentication
 
+The system uses a simple role-based authentication mechanism to distinguish between administrators and regular users.
+
+- **Admin users**: Start the client with `ADMIN:` prefix. They have full access to all commands including file upload, download, and deletion.
+- **Regular users**: Start the client with `USER:` prefix. They have limited access, mainly read-only operations.
+
+### How it works:
+When a client connects to the server, their role is determined based on the initial message:
+- If the message starts with `ADMIN:` the user is assigned admin privileges
+- Otherwise the user is treated as a regular user
+
+This role is stored on the server and used to control access to all commands.
+
 # Available Commands
+
+The system supports different commands depending on the user role.
+
+### User Commands
+- `ping` - Sends heartbeat to keep connection active  
+- Any message - Treated as a normal message and logged by the server  
+- `/read <file>` - Reads a file from the server (restricted access applies)
+
+### Admin Commands
+- `/list` - Lists all files in the server directory  
+- `/read <file>` - Reads a file from the server  
+- `/upload <filename>|<content>` - Uploads a new file to the server  
+- `/download <file>` - Downloads a file from the server (sent as `DOWNLOAD:`)  
+- `/delete <file>` - Deletes a file from the server  
+
+### System Commands (Internal)
+- `ping` - Used by client to keep heartbeat alive  
+- `ADMIN:` - Identifies admin role during connection  
+- `USER:` - Identifies regular user during connection  
+
+### Notes
+- Admin commands are processed instantly  
+- User commands may have a delay 
+- Inactive clients are automatically removed via heartbeat timeout  
+- File paths are sanitized using `path.basename()` for security  
