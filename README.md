@@ -108,7 +108,9 @@ The system supports different commands depending on the user role.
 - `/read <file>` - Reads a file from the server  
 - `/upload <filename>|<content>` - Uploads a new file to the server  
 - `/download <file>` - Downloads a file from the server (sent as `DOWNLOAD:`)  
-- `/delete <file>` - Deletes a file from the server  
+- `/delete <file>` - Deletes a file from the server
+- `/search <keyword>` - Searches for files by name  
+- `/info <file>` - Displays file details (size, creation date, modification date)  
 
 ### System Commands (Internal)
 - `ping` - Used by client to keep heartbeat alive  
