@@ -28,6 +28,22 @@ udp-socket-system/
 
 # System Roles
 
+## Gatekeeper (UDP Server)
+
+Responsible for managing the UDP socket server, handling client connections, authentication (admin/user roles), message processing, and enforcing access rules and delays. It also keeps track of active clients and manages heartbeats.
+
+## File Manager
+
+Handles all file-related operations on the server such as listing, reading, uploading, downloading, and deleting files. It also ensures security by preventing unauthorized access and directory traversal attacks.
+
+## Monitor (HTTP Server)
+
+Provides real-time monitoring of the system through an HTTP endpoint. It logs all server activity, displays recent messages, and shows the current server status and stored files.
+
+## Client Application
+
+Represents the user-side application that connects to the UDP server. It allows users (admin or regular user) to send commands, receive responses, and interact with the file system based on their assigned role.
+
 # Setup & Installation
 
 # Authentication
