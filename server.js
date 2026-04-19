@@ -1,7 +1,7 @@
 // server.js (Main entry point)
-const FileManager = require('./fileManager');
-const HttpMonitor = require('./monitor');
-const UDPServerManager = require('./gatekeeper');
+const FileManager = require('./classes/fileManager');
+const HttpMonitor = require('./classes/monitor');
+const UDPServerManager = require('./classes/gatekeeper');
 
 const fileManager = new FileManager();
 const monitor = new HttpMonitor();

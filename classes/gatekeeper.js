@@ -1,5 +1,5 @@
 const dgram = require('dgram');
-const config = require('./config/config');
+const config = require('../config/config');
 
 class UDPServerManager {
 

@@ -1,7 +1,7 @@
 const dgram = require('dgram');
 const readline = require('readline');
 const fs = require('fs');
-const config = require('./config/config');
+const config = require('../config/config');
 
 class UDPClient {
     constructor(role = 'user') {

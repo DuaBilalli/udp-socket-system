@@ -1,7 +1,7 @@
 const http = require('http');
 const fsSync = require('fs');
 const path = require('path');
-const config = require('./config/config');
+const config = require('../config/config');
 
 class HttpMonitor {
     constructor() {
