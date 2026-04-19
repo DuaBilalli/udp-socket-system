@@ -49,7 +49,30 @@ class FileManager {
 
         await fs.unlink(safePath);
         send(`SERVER: File "${argument}" u fshi.`);
-
+      } else if (command === '/info' && role === 'admin') {
+        const safePath = path.join(this.dir, path.basename(argument));
+  
+        const stats = await fs.stat(safePath);
+  
+        send(
+          `SERVER INFO:\n` +
+          `File: ${argument}\n` +
+          `Size: ${stats.size} bytes\n` +
+          `Created: ${stats.birthtime}\n` +
+          `Modified: ${stats.mtime}`
+        );
+  
+      } else if (command === '/search' && role === 'admin') {
+        const files = await fs.readdir(this.dir);
+        const results = files.filter(file =>
+            file.toLowerCase().includes(argument.toLowerCase())
+        );
+  
+        send(
+            results.length === 0
+                ? 'SERVER: Asnje file nuk u gjet.'
+                : 'SERVER: Rezultatet:\n' + results.join('\n')
+        );
       } else {
         if (
           ['/upload', '/download', '/delete', '/info', '/search'].includes(command) &&
