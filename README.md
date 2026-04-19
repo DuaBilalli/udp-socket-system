@@ -23,7 +23,11 @@ udp-socket-system/
 │
 ├── server.js
 ├── client.js
-└── client-admin.js
+├── client-admin.js
+│
+├── .gitignore
+└── README.md
+
 ```
 
 # System Roles
@@ -45,6 +49,36 @@ Provides real-time monitoring of the system through an HTTP endpoint. It logs al
 Represents the user-side application that connects to the UDP server. It allows users (admin or regular user) to send commands, receive responses, and interact with the file system based on their assigned role.
 
 # Setup & Installation
+
+1. Clone the repository  
+```bash
+git clone https://github.com/your-username/udp-socket-system.git
+```
+
+2. Navigate into the project folder  
+```bash
+cd udp-socket-system
+```
+
+3. Install dependencies  
+```bash
+npm install
+```
+
+4. Start the server  
+```bash
+node server.js
+```
+
+5. Start a user client  
+```bash
+node client.js
+```
+
+6. Start an admin client  
+```bash
+node client-admin.js
+```
 
 # Authentication
 
